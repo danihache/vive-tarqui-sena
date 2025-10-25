@@ -15,7 +15,7 @@ app.post("/api/contactos", (req, res) => {
     return res.status(400).json({ error: "nombre, email, telefono y mensaje son requeridos" });
   }
 
-  db.contactos.query(
+  conexionContactos.query(
     "INSERT INTO contactos (nombre, email, telefono, mensaje) VALUES (?, ?, ?, ?)",
     [nombre, email, telefono, mensaje], (err, resultado) => {
       if (err) return res.status(500).json({ error: "Error guardando el contacto" });
@@ -40,7 +40,7 @@ app.post("/api/reservas/restaurante-bar", (req, res) => {
     return res.status(400).json({ error: "Todos los campos son obligatorios" });
   }
   
-  db.reservas.query(
+  conexionReservas.query(
     "INSERT INTO reservas (tipo, lugar, nombre, telefono, fecha, hora, personas) VALUES (?, ?, ?, ?, ?, ?, ?)",
     [tipo, lugar, nombre, telefono, fecha, hora, personas], 
     (err, result) => {
@@ -71,7 +71,7 @@ app.post("/api/reservas/hotel", (req, res) => {
     return res.status(400).json({ error: "Todos los campos son obligatorios" });
   }
   
-   db.reservas.query(
+   conexionReservas.query(
     "INSERT INTO reservas (tipo, lugar, nombre, telefono, fecha, hora, noches, personas) VALUES ('hotel', ?, ?, ?, ?, NULL, ?, ?)",
     [lugar, nombre, telefono, fecha, noches, personas], 
     (err, result) => {
@@ -147,7 +147,7 @@ app.get("/api/resenas", (req, res) => {
     return res.status(400).json({ error: "lugarId es requerido" });
   }
   
-  db.resenas.query(
+  conexionResenas.query(
     "SELECT * FROM resenas WHERE lugarId = ? ORDER BY created_at DESC",
     [lugarId],
     (err, resultado) => {
@@ -170,7 +170,7 @@ app.post("/api/resenas", (req, res) => {
     });
   }
   
-  db.resenas.query(
+  conexionResenas.query(
     "INSERT INTO resenas (lugarId, nombre, comentario, calificacion, fecha) VALUES (?, ?, ?, ?, ?)",
     [lugarId, nombre, comentario, calificacion, fecha],
     (err, resultado) => {
@@ -192,7 +192,7 @@ app.post("/api/resenas", (req, res) => {
 });
 
 app.get("/api/resenas/all", (req, res) => {
-  db.resenas.query(
+  conexionResenas.query(
     "SELECT * FROM resenas ORDER BY created_at DESC",
     (err, resultado) => {
       if (err) {
