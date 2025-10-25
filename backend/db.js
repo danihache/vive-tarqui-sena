@@ -1,52 +1,56 @@
-const mysql = require("mysql2");
+require('dotenv').config();
+const mysql = require('mysql2');
 
 const conexionContactos = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "12345",
-    database: "contactodb"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_CONTACTOS,
+    port: process.env.DB_PORT
 });
 
 const conexionReservas = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "12345",
-    database: "reservasdb"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_RESERVAS,
+    port: process.env.DB_PORT
 });
 
 const conexionResenas = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "12345",
-    database: "resenasdb"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_RESENAS,
+    port: process.env.DB_PORT
 });
 
 conexionContactos.connect((err) => {
-    if(err) {
-        console.error("Error conectando a contactodb:", err);
+    if (err) {
+        console.error('Error conectando a contactodb:', err);
         return;
     }
-    console.log("Conectado a contactodb");
+    console.log('Conectado a contactodb');
 });
 
 conexionReservas.connect((err) => {
-    if(err) {
-        console.error("Error conectando a reservasdb:", err);
+    if (err) {
+        console.error('Error conectando a reservasdb:', err);
         return;
     }
-    console.log("Conectado a reservasdb");
+    console.log('Conectado a reservasdb');
 });
 
 conexionResenas.connect((err) => {
-    if(err) {
-        console.error("Error conectando a resenasdb:", err);
+    if (err) {
+        console.error('Error conectando a resenasdb:', err);
         return;
     }
-    console.log("Conectado a resenasdb");
+    console.log('Conectado a resenasdb');
 });
 
 module.exports = {
-    contactos: conexionContactos,
-    reservas: conexionReservas,
-    resenas: conexionResenas
+    conexionContactos,
+    conexionReservas,
+    conexionResenas
 };
