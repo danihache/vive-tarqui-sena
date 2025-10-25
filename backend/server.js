@@ -1,10 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-const db = require("./db.js");
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const { conexionContactos, conexionReservas, conexionResenas } = require('./db');
 
 const app = express();
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.post("/api/contactos", (req, res) => {
   const { nombre, email, telefono, mensaje } = req.body;
@@ -203,6 +205,21 @@ app.get("/api/resenas/all", (req, res) => {
   );
 });
 
-app.listen(3000, () => {
-    console.log("El servidor esta corriendo en el puerto http://localhost:3000")
+app.get('/', (req, res) => {
+    res.json({ mensaje: 'API Vive Tarquí funcionando correctamente' });
 });
+
+app.get('/api/contactos', (req, res) => {
+    conexionContactos.query('SELECT * FROM contactos', (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(results);
+    });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
