@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactenos</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+    body {
+        background-color: #F5F5F5;
+    }
+    
+    .navbar {
+        background-color: #A9737E !important;
+        font-size: 1.5rem;
+    }
+    
+    .card {
+        background-color: #A9737E; 
+    }
+    
+    h1, h2, h3, h4, h5 {
+        color: #660D1F !important; 
+    }
+    
+    .custom-footer {
+        background-color: #A9737E; 
+        color: #ffffff;      
+    }
+
+    .btn-customer {
+        background-color: #660D1F !important; 
+        border-color: none !important;
+        color: #ffffff;  
+    }
+
+    .btn-customer:hover,
+    .btn-customer:focus,
+    .btn-customer:active {
+        background-color: #660D1F !important;
+        border-color: none !important;
+        color: #ffffff !important;
+        opacity: 1 !important;
+    }
+
+    .text-custom {
+        color: #660D1F; 
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <img src="../assets/img/Logo.png" alt="ViveTarqui" width="120" height="120">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active text-white" aria-current="page" href="..//index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="quehacer.html">Qué hacer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="contactenos.html">Contáctenos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
+        <section class="container my-4">
+            <h3 class="text">ESCRÍBENOS</h3>
+        </section>
+        
+        <div class="container my-1 mx-auto">
+            <p>
+                En Vive Tarqui estamos aquí para ayudarte. Si tienes dudas, necesitas más información o deseas guía sobre cómo aprovechar al máximo nuestra aplicación y los servicios que ofrece el municipio, no dudes en escribirnos.
+                <br><br>
+                Nuestro equipo estará encantado de orientarte y brindarte la asistencia que necesites para que tu experiencia sea práctica, sencilla y completa.
+            </p>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container my-4">
+            <div class="card col-12 col-md-8 mx-auto p-3 p-md-4 rounded">
+                <form id="formContacto">
+                    <div class="mb-3">
+                        <label for="inputNombre" class="form-label text-dark fw-bold">Nombre</label>
+                        <input type="text" class="form-control" id="inputNombre" maxlength="50">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label text-dark fw-bold">E-mail</label>
+                        <input type="email" class="form-control" id="inputEmail" maxlength="30">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputTelefono" class="form-label fw-bold text-dark">Teléfono</label>
+                        <input type="number" class="form-control" id="inputTelefono">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inputMensaje" class="form-label text-dark fw-bold">Mensaje</label>
+                        <textarea class="form-control" id="inputMensaje" rows="5" maxlength="500" placeholder="Máx. 500 caracteres"></textarea>
+                    </div>
+
+                    <div class="d-grid d-md-flex justify-content-md-end">
+                        <button type="submit" class="btn btn-customer fw-bold">Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="custom-footer text-center py-3 mt-4">
+        <div class="container">
+            <p class="mb-0">Copyright © 2025, Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+     <script>
+    const API_URL = 'http://localhost:3000/api/contactos';
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById('formContacto');
+
+      if (form) {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const nombre = document.getElementById("inputNombre").value;
+          const email = document.getElementById("inputEmail").value;
+          const telefono = document.getElementById("inputTelefono").value;
+          const mensaje = document.getElementById("inputMensaje").value;
+
+          const contacto = {
+            nombre: nombre,
+            email: email,
+            telefono: telefono,
+            mensaje: mensaje
+          };
+
+          console.log('Enviando mensaje de contacto:', contacto);
+
+          try {
+            const response = await fetch(API_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(contacto)
+            });
+
+            if (response.ok) {
+              const resultado = await response.json();
+              console.log('Mensaje enviado:', resultado);
+              
+              form.reset();
+              
+              alert(`¡Mensaje enviado exitosamente!\n\nGracias ${nombre}, hemos recibido tu mensaje.\nNos pondremos en contacto contigo pronto.`);
+            } else {
+              const error = await response.json();
+              console.error('Error:', error);
+              throw new Error(error.error || 'Error al enviar el mensaje');
+            }
+          } catch (error) {
+            console.error('Error completo:', error);
+            alert('Hubo un error al enviar tu mensaje. Por favor, intenta de nuevo o contáctanos directamente por teléfono.');
+          }
+        });
+      }
+    });
+    </script>
+</body>
+</html>

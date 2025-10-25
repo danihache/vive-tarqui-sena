@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospedaje</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <style>
+    body {
+      background-color: #F5F5F5;
+    }
+    .navbar {
+      background-color: #A9737E !important;
+      font-size: 1.5rem
+    }
+   
+    h1, h2, h3, h4, h5 {
+      color: #660D1F !important; 
+    }
+    .custom-footer {
+      background-color: #A9737E; 
+      color: #ffffff;      
+    }
+
+    .btn-customer {
+      background-color: #660D1F !important; 
+      border-color: none !important;
+      color: #ffffff;  
+    }
+    .btn-customer:hover,
+    .btn-customer:focus,
+    .btn-customer:active {
+      background-color: #660D1F !important;
+      border-color: none !important;
+      color: #ffffff !important;
+      opacity: 1 !important;
+    }
+    .text-custom {
+      color: #660D1F; 
+    }
+    a.text-decoration-none:hover {
+      opacity: 1;
+    }
+    a.text-decoration-none:hover .bg-white {
+      transform: none;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    a.text-decoration-none:hover .text-custom {
+      color: #660D1F !important;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <img src="../assets/img/Logo.png" alt="ViveTarqui" width="120" height="120">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active text-white" aria-current="page" href="..//index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="quehacer.html">Qué hacer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="contactenos.html">Contáctenos</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section class="container my-4">
+            <h3 class="text">HOTELES</h3>
+        </section>
+    </header>
+
+    <div class="m-4 p-2 my-3">
+        <div class="row text-center g-4 justify-content-center">
+
+            <div class="col-6 col-md-4">
+                <a href="casavictoria.html" class="text-decoration-none text-dark">
+                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow overflow-hidden" style="width:250px; height:250px;">
+                        <img src="../assets/img/HOTEL1.jpg" alt="Hotel Casa Victoria" class="img-fluid" style="max-width:100%; max-height:100%; object-fit:contain;">
+                    </div>
+                    <p class="mt-3 fs-3 fw-bold text-custom">Hotel Casa Victoria</p>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4">
+                <a href="castalia.html" class="text-decoration-none text-dark">
+                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow overflow-hidden" style="width:250px; height:250px;">
+                        <img src="../assets/img/HOTEL2.png" alt="Hotel Castalia Plus" style="width:100%; height:100%; object-fit:cover; display:block;">
+                    </div>
+                    <p class="mt-3 fs-3 fw-bold text-custom">Hotel Castalia Plus</p>
+                </a>
+            </div>
+
+            <div class="col-6 col-md-4">
+                <a href="hospedajereal.html" class="text-decoration-none text-dark">
+                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow overflow-hidden" style="width:250px; height:250px;">
+                        <img src="../assets/img/HOTEL3.jpg" alt="Hospedaje Real" class="img-fluid" style="max-width:100%; max-height:100%; object-fit:contain;">
+                    </div>
+                    <p class="mt-3 fs-3 fw-bold text-custom">Hospedaje Real</p>
+                </a>
+            </div>
+        </div>
+
+            <div class="text-center mt-4 mb-2">
+                <button type="button" class="btn btn-customer btn-lg fw-bold" data-bs-toggle="modal" data-bs-target="#reservaModal">
+                    Reservar
+                </button>
+            </div>
+        </div>
+
+        <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-white">
+                        <h5 class="modal-title" id="reservaModalLabel">Hacer una Reserva</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="formReserva">
+                            <div class="mb-3">
+                                <label for="hotel" class="form-label">Hotel</label>
+                                <select class="form-select" id="hotel" required>
+                                    <option value="">-- Selecciona --</option>
+                                    <option value="Casa Victoria">Casa Victoria</option>
+                                    <option value="Castalia Plus">Castalia Plus</option>
+                                    <option value="Hospedaje Real">Hospedaje Real</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="number" class="form-control" id="telefono" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="noches" class="form-label">Número de noches</label>
+                                <input type="number" class="form-control" id="noches" name="noches" required min="1">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="personas" class="form-label">Número de personas</label>
+                                <input type="number" class="form-control" id="personas" name="personas" required min="1">
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-customer" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-customer">Confirmar Reserva</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="custom-footer text-center py-3 mt-3">
+        <div class="container">
+            <p class="mb-0">Copyright © 2025, Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+    const API_URL = 'http://localhost:3000/api/reservas/hotel';
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById('formReserva');
+
+      if (form) {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const hotel = document.getElementById("hotel").value;
+          const nombre = document.getElementById("nombre").value;
+          const telefono = document.getElementById("telefono").value;
+          const fecha = document.getElementById("fecha").value;
+          const noches = document.getElementById("noches").value;
+          const personas = document.getElementById("personas").value;
+
+          const reserva = {
+            lugar: hotel,
+            nombre: nombre,
+            telefono: telefono,
+            fecha: fecha,
+            noches: parseInt(noches),
+            personas: parseInt(personas)
+          };
+
+          console.log('Enviando reserva:', reserva);
+
+          try {
+            const response = await fetch(API_URL, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(reserva)
+            });
+
+            if (response.ok) {
+              const resultado = await response.json();
+              console.log('Reserva confirmada:', resultado);
+              
+              form.reset();
+              
+              const modal = bootstrap.Modal.getInstance(document.getElementById('reservaModal'));
+              if (modal) modal.hide();
+              
+              alert(`¡Reserva confirmada exitosamente!\n\nHotel: ${hotel}\nFecha de entrada: ${fecha}\nNoches: ${noches}\nPersonas: ${personas}\n\n¡Te esperamos!`);
+            } else {
+              const error = await response.json();
+              console.error('Error:', error);
+              throw new Error(error.error || 'Error al confirmar la reserva');
+            }
+          } catch (error) {
+            console.error('Error completo:', error);
+            alert('Hubo un error al confirmar tu reserva. Por favor, intenta de nuevo.');
+          }
+        });
+      }
+    });
+    </script>
+</body>
+</html>
