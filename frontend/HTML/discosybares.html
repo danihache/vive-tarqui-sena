@@ -122,9 +122,8 @@
 
             <div class="text-center mt-4 mb-2">
                 <button type="button" class="btn btn-customer btn-lg fw-bold" data-bs-toggle="modal" data-bs-target="#reservaModal">
-                    Reservar
+                    ➕ Hacer Nueva Reserva
                 </button>
-            </div>
         </div>
 
         <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
@@ -182,6 +181,93 @@
                 </div>
             </div>
         </div>
+
+        <section class="container my-5 py-4" style="background-color: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <div class="text-center mb-4">
+                <h3>📋 GESTIONAR MIS RESERVAS</h3>
+                <p class="text-muted">Ver, editar o eliminar tus reservas de bar</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <label for="buscarReservaBar" class="form-label fw-bold">
+                                    🔍 Buscar mis reservas por teléfono:
+                                </label>
+                                <div class="input-group input-group-lg">
+                                    <input type="text" class="form-control" id="buscarReservaBar" 
+                                        placeholder="Ejemplo: 3001234567">
+                                    <button class="btn btn-customer" type="button" onclick="buscarMisReservasBar()">
+                                        Buscar
+                                    </button>
+                                </div>
+                                <small class="text-muted">
+                                    Ingresa el teléfono que usaste al hacer la reserva
+                                </small>
+                            </div>
+                            
+                            <div id="resultadoReservasBar"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal fade" id="editarMiReservaBarModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #A9737E;">
+                        <h5 class="modal-title text-white">✏️ Editar Mi Reserva</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formEditarMiReservaBar">
+                            <input type="hidden" id="editMiReservaBarId">
+                            
+                            <div class="alert alert-info">
+                                <strong>ℹ️ Nota:</strong> Puedes modificar todos los campos excepto el bar
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Bar</label>
+                                <input type="text" class="form-control" id="editMiLugarBar" readonly style="background-color: #e9ecef;">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="editMiNombreBar" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="editMiTelefonoBar" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Fecha</label>
+                                <input type="date" class="form-control" id="editMiFechaBar" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Hora</label>
+                                <input type="time" class="form-control" id="editMiHoraBar" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Número de personas</label>
+                                <input type="number" class="form-control" id="editMiPersonasBar" min="1" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-customer" onclick="guardarMiReservaBar()">💾 Guardar Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer class="custom-footer text-center py-3 mt-3">
@@ -192,65 +278,232 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script>
-    const API_URL = 'http://localhost:3000/api/reservas/restaurante-bar';
+    const API_URL = 'http://localhost:3000/api';
+    const TIPO_LUGAR = 'bar';
 
     document.addEventListener("DOMContentLoaded", () => {
-      const form = document.getElementById('formReserva');
+    const form = document.getElementById('formReserva');
 
-      if (form) {
+    if (form) {
         form.addEventListener("submit", async (e) => {
-          e.preventDefault();
+        e.preventDefault();
 
-          const bar = document.getElementById("discosybares").value;
-          const nombre = document.getElementById("nombre").value;
-          const telefono = document.getElementById("telefono").value;
-          const fecha = document.getElementById("fecha").value;
-          const hora = document.getElementById("hora").value;
-          const personas = document.getElementById("personas").value;
+        const bar = document.getElementById("discosybares").value;
+        const nombre = document.getElementById("nombre").value;
+        const telefono = document.getElementById("telefono").value;
+        const fecha = document.getElementById("fecha").value;
+        const hora = document.getElementById("hora").value;
+        const personas = document.getElementById("personas").value;
 
-          const reserva = {
-            tipo: 'bar',
+        const reserva = {
+            tipo: TIPO_LUGAR,
             lugar: bar,
             nombre: nombre,
             telefono: telefono,
             fecha: fecha,
             hora: hora,
             personas: parseInt(personas)
-          };
+        };
 
-          console.log('Enviando reserva:', reserva);
-
-          try {
-            const response = await fetch(API_URL, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(reserva)
+        try {
+            const response = await fetch(`${API_URL}/reservas/restaurante-bar`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(reserva)
             });
 
             if (response.ok) {
-              const resultado = await response.json();
-              console.log('Reserva confirmada:', resultado);
-              
-              form.reset();
-              
-              const modal = bootstrap.Modal.getInstance(document.getElementById('reservaModal'));
-              if (modal) modal.hide();
-              
-              alert(`¡Reserva confirmada exitosamente!\n\nLugar: ${bar}\nFecha: ${fecha}\nHora: ${hora}\nPersonas: ${personas}\n\n¡Te esperamos!`);
+            form.reset();
+            const modal = bootstrap.Modal.getInstance(document.getElementById('reservaModal'));
+            if (modal) modal.hide();
+            
+            alert(`✅ ¡Reserva confirmada exitosamente!\n\nBar: ${bar}\nFecha: ${fecha}\nHora: ${hora}\nPersonas: ${personas}\n\n💡 Usa tu teléfono (${telefono}) para buscar y gestionar tu reserva.`);
             } else {
-              const error = await response.json();
-              console.error('Error:', error);
-              throw new Error(error.error || 'Error al confirmar la reserva');
+            throw new Error('Error al confirmar la reserva');
             }
-          } catch (error) {
-            console.error('Error completo:', error);
-            alert('Hubo un error al confirmar tu reserva. Por favor, intenta de nuevo.');
-          }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al confirmar tu reserva. Verifica que el servidor esté corriendo.');
+        }
         });
-      }
+    }
     });
+
+    async function buscarMisReservasBar() {
+        const telefono = document.getElementById('buscarReservaBar').value.trim();
+        const resultadoDiv = document.getElementById('resultadoReservasBar');
+        
+        if (!telefono) {
+            resultadoDiv.innerHTML = '<div class="alert alert-warning">⚠️ Por favor ingresa tu teléfono</div>';
+            return;
+        }
+        
+        try {
+            resultadoDiv.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2">🔍 Buscando tus reservas...</p>
+                </div>
+            `;
+            
+            const response = await fetch(`${API_URL}/reservas?tipo=${TIPO_LUGAR}`);
+            
+            if (!response.ok) {
+                throw new Error(`Error del servidor: ${response.status}`);
+            }
+            
+            const todasReservas = await response.json();
+            const misReservas = todasReservas.filter(r => r.telefono === telefono);
+            
+            if (misReservas.length === 0) {
+                resultadoDiv.innerHTML = `
+                    <div class="alert alert-info">
+                        <h5>ℹ️ No se encontraron reservas</h5>
+                        <p class="mb-0">No hay reservas registradas con el teléfono: <strong>${telefono}</strong></p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div class="alert alert-success">
+                    ✅ Se encontraron <strong>${misReservas.length}</strong> reserva(s)
+                </div>
+            `;
+            
+            misReservas.forEach(reserva => {
+                html += `
+                    <div class="card mb-3" style="border-left: 4px solid #660D1F;">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h5 class="text-custom mb-3">
+                                        🍺 ${reserva.lugar}
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-sm-6 mb-2">
+                                            <small class="text-muted">Nombre:</small>
+                                            <p class="mb-0 fw-bold">${reserva.nombre}</p>
+                                        </div>
+                                        <div class="col-sm-6 mb-2">
+                                            <small class="text-muted">Teléfono:</small>
+                                            <p class="mb-0 fw-bold">${reserva.telefono}</p>
+                                        </div>
+                                        <div class="col-sm-4 mb-2">
+                                            <small class="text-muted">📅 Fecha:</small>
+                                            <p class="mb-0 fw-bold">${reserva.fecha}</p>
+                                        </div>
+                                        <div class="col-sm-4 mb-2">
+                                            <small class="text-muted">🕐 Hora:</small>
+                                            <p class="mb-0 fw-bold">${reserva.hora}</p>
+                                        </div>
+                                        <div class="col-sm-4 mb-2">
+                                            <small class="text-muted">👥 Personas:</small>
+                                            <p class="mb-0 fw-bold">${reserva.personas}</p>
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">
+                                        <em>Reserva #${reserva.id}</em>
+                                    </small>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <button class="btn btn-warning btn-sm w-100 mb-2" onclick="editarMiReservaBar(${reserva.id})">
+                                        ✏️ Editar
+                                    </button>
+                                    <button class="btn btn-danger btn-sm w-100" onclick="eliminarMiReservaBar(${reserva.id}, '${reserva.lugar}')">
+                                        🗑️ Eliminar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            resultadoDiv.innerHTML = html;
+            
+        } catch (error) {
+            console.error('Error:', error);
+            resultadoDiv.innerHTML = `
+                <div class="alert alert-danger">
+                    <h5>❌ Error de conexión</h5>
+                    <p>No se pudo conectar con el servidor.</p>
+                    <p class="mb-0"><small>Verifica que el servidor esté corriendo: <code>node server.js</code></small></p>
+                </div>
+            `;
+        }
+    }
+
+    async function editarMiReservaBar(id) {
+        try {
+            const response = await fetch(`${API_URL}/reservas/${id}`);
+            const reserva = await response.json();
+            
+            document.getElementById('editMiReservaBarId').value = reserva.id;
+            document.getElementById('editMiLugarBar').value = reserva.lugar;
+            document.getElementById('editMiNombreBar').value = reserva.nombre;
+            document.getElementById('editMiTelefonoBar').value = reserva.telefono;
+            document.getElementById('editMiFechaBar').value = reserva.fecha;
+            document.getElementById('editMiHoraBar').value = reserva.hora;
+            document.getElementById('editMiPersonasBar').value = reserva.personas;
+            
+            new bootstrap.Modal(document.getElementById('editarMiReservaBarModal')).show();
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al cargar la reserva');
+        }
+    }
+
+    async function guardarMiReservaBar() {
+        const id = document.getElementById('editMiReservaBarId').value;
+        const data = {
+            lugar: document.getElementById('editMiLugarBar').value,
+            nombre: document.getElementById('editMiNombreBar').value,
+            telefono: document.getElementById('editMiTelefonoBar').value,
+            fecha: document.getElementById('editMiFechaBar').value,
+            hora: document.getElementById('editMiHoraBar').value,
+            personas: parseInt(document.getElementById('editMiPersonasBar').value)
+        };
+        
+        try {
+            const response = await fetch(`${API_URL}/reservas/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            if (response.ok) {
+                alert('✅ ¡Reserva actualizada exitosamente!');
+                bootstrap.Modal.getInstance(document.getElementById('editarMiReservaBarModal')).hide();
+                buscarMisReservasBar();
+            } else {
+                throw new Error('Error al actualizar');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al guardar los cambios');
+        }
+    }
+
+    async function eliminarMiReservaBar(id, lugar) {
+        if (!confirm(`⚠️ ¿Estás seguro de eliminar tu reserva en ${lugar}?\n\nEsta acción no se puede deshacer.`)) return;
+        
+        try {
+            const response = await fetch(`${API_URL}/reservas/${id}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                alert('✅ Reserva eliminada exitosamente');
+                buscarMisReservasBar();
+            } else {
+                throw new Error('Error al eliminar');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al eliminar la reserva');
+        }
+    }
     </script>
 </body>
 </html>

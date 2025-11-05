@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - ViveTarqui</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F5F5F5;
+        }
+        .navbar {
+            background-color: #A9737E !important;
+            font-size: 1.5rem;
+        }
+        h1, h2, h3, h4, h5 {
+            color: #660D1F !important;
+        }
+        .custom-footer {
+            background-color: #A9737E;
+            color: #ffffff;
+        }
+        .btn-custom {
+            background-color: #660D1F !important;
+            border-color: #660D1F !important;
+            color: #ffffff;
+        }
+        .btn-custom:hover {
+            background-color: #4a0916 !important;
+            opacity: 0.9;
+        }
+        .table-custom thead {
+            background-color: #A9737E;
+            color: white;
+        }
+        .badge-custom {
+            background-color: #660D1F;
+        }
+        .nav-pills .nav-link.active {
+            background-color: #660D1F;
+        }
+        .card-header-custom {
+            background-color: #A9737E;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <img src="../assets/img/Logo.png" alt="ViveTarqui" width="120" height="120">
+                <span class="navbar-brand text-white ms-3">Panel de Administración</span>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="../index.html">Volver al Sitio</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container my-5">
+        <h2 class="mb-4">Gestión de Datos</h2>
+
+        <!-- Pestañas de navegación -->
+        <ul class="nav nav-pills mb-4" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="reservas-tab" data-bs-toggle="pill" data-bs-target="#reservas" type="button">
+                    Reservas <span class="badge badge-custom" id="countReservas">0</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contactos-tab" data-bs-toggle="pill" data-bs-target="#contactos" type="button">
+                    Contactos <span class="badge badge-custom" id="countContactos">0</span>
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="resenas-tab" data-bs-toggle="pill" data-bs-target="#resenas" type="button">
+                    Reseñas <span class="badge badge-custom" id="countResenas">0</span>
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="adminTabsContent">
+            
+            <div class="tab-pane fade show active" id="reservas" role="tabpanel">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        <h4 class="mb-0 text-white">Reservas Registradas</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="filtroTipo" class="form-label">Filtrar por tipo:</label>
+                            <select class="form-select" id="filtroTipo" onchange="cargarReservas()">
+                                <option value="">Todas</option>
+                                <option value="hotel">Hoteles</option>
+                                <option value="restaurante">Restaurantes</option>
+                                <option value="bar">Bares</option>
+                            </select>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-custom">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Tipo</th>
+                                        <th>Lugar</th>
+                                        <th>Nombre</th>
+                                        <th>Teléfono</th>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                        <th>Noches</th>
+                                        <th>Personas</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaReservas">
+                                    <tr>
+                                        <td colspan="10" class="text-center">Cargando...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="contactos" role="tabpanel">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        <h4 class="mb-0 text-white">Contactos Recibidos</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-custom">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre</th>
+                                        <th>Email</th>
+                                        <th>Teléfono</th>
+                                        <th>Mensaje</th>
+                                        <th>Fecha</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaContactos">
+                                    <tr>
+                                        <td colspan="7" class="text-center">Cargando...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="resenas" role="tabpanel">
+                <div class="card">
+                    <div class="card-header card-header-custom">
+                        <h4 class="mb-0 text-white">Reseñas Publicadas</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-custom">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Lugar ID</th>
+                                        <th>Nombre</th>
+                                        <th>Calificación</th>
+                                        <th>Comentario</th>
+                                        <th>Fecha</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaResenas">
+                                    <tr>
+                                        <td colspan="7" class="text-center">Cargando...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editarReservaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header card-header-custom">
+                    <h5 class="modal-title text-white">Editar Reserva</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarReserva">
+                        <input type="hidden" id="editReservaId">
+                        <div class="mb-3">
+                            <label class="form-label">Lugar</label>
+                            <input type="text" class="form-control" id="editLugar" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="editTelefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="editFecha" required>
+                        </div>
+                        <div class="mb-3" id="editHoraContainer">
+                            <label class="form-label">Hora</label>
+                            <input type="time" class="form-control" id="editHora">
+                        </div>
+                        <div class="mb-3" id="editNochesContainer">
+                            <label class="form-label">Noches</label>
+                            <input type="number" class="form-control" id="editNoches" min="1">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Personas</label>
+                            <input type="number" class="form-control" id="editPersonas" required min="1">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-custom" onclick="guardarReserva()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editarContactoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header card-header-custom">
+                    <h5 class="modal-title text-white">Editar Contacto</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarContacto">
+                        <input type="hidden" id="editContactoId">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editContactoNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="editContactoEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" class="form-control" id="editContactoTelefono" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Mensaje</label>
+                            <textarea class="form-control" id="editContactoMensaje" rows="4" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-custom" onclick="guardarContacto()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editarResenaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header card-header-custom">
+                    <h5 class="modal-title text-white">Editar Reseña</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formEditarResena">
+                        <input type="hidden" id="editResenaId">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editResenaNombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Calificación</label>
+                            <select class="form-select" id="editResenaCalificacion" required>
+                                <option value="1">1 estrella</option>
+                                <option value="2">2 estrellas</option>
+                                <option value="3">3 estrellas</option>
+                                <option value="4">4 estrellas</option>
+                                <option value="5">5 estrellas</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Comentario</label>
+                            <textarea class="form-control" id="editResenaComentario" rows="4" required></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-custom" onclick="guardarResena()">Guardar Cambios</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="custom-footer text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">Copyright © 2025, Panel de Administración - ViveTarqui</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarReservas();
+            cargarContactos();
+            cargarResenas();
+        });
+
+        async function cargarReservas() {
+            try {
+                const tipo = document.getElementById('filtroTipo').value;
+                const url = tipo ? `${API_URL}/reservas?tipo=${tipo}` : `${API_URL}/reservas`;
+                
+                const response = await fetch(url);
+                const reservas = await response.json();
+                
+                document.getElementById('countReservas').textContent = reservas.length;
+                
+                const tbody = document.getElementById('tablaReservas');
+                if (reservas.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="10" class="text-center">No hay reservas registradas</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = reservas.map(r => `
+                    <tr>
+                        <td>${r.id}</td>
+                        <td><span class="badge bg-info">${r.tipo}</span></td>
+                        <td>${r.lugar}</td>
+                        <td>${r.nombre}</td>
+                        <td>${r.telefono}</td>
+                        <td>${r.fecha}</td>
+                        <td>${r.hora || '-'}</td>
+                        <td>${r.noches || '-'}</td>
+                        <td>${r.personas}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning" onclick="editarReserva(${r.id})">
+                                Editar
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="eliminarReserva(${r.id})">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar las reservas');
+            }
+        }
+
+        async function editarReserva(id) {
+            try {
+                const response = await fetch(`${API_URL}/reservas/${id}`);
+                const reserva = await response.json();
+                
+                document.getElementById('editReservaId').value = reserva.id;
+                document.getElementById('editLugar').value = reserva.lugar;
+                document.getElementById('editNombre').value = reserva.nombre;
+                document.getElementById('editTelefono').value = reserva.telefono;
+                document.getElementById('editFecha').value = reserva.fecha;
+                document.getElementById('editHora').value = reserva.hora || '';
+                document.getElementById('editNoches').value = reserva.noches || '';
+                document.getElementById('editPersonas').value = reserva.personas;
+                
+                // Mostrar/ocultar campos según tipo
+                if (reserva.tipo === 'hotel') {
+                    document.getElementById('editHoraContainer').style.display = 'none';
+                    document.getElementById('editNochesContainer').style.display = 'block';
+                } else {
+                    document.getElementById('editHoraContainer').style.display = 'block';
+                    document.getElementById('editNochesContainer').style.display = 'none';
+                }
+                
+                new bootstrap.Modal(document.getElementById('editarReservaModal')).show();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar la reserva');
+            }
+        }
+
+        async function guardarReserva() {
+            const id = document.getElementById('editReservaId').value;
+            const data = {
+                lugar: document.getElementById('editLugar').value,
+                nombre: document.getElementById('editNombre').value,
+                telefono: document.getElementById('editTelefono').value,
+                fecha: document.getElementById('editFecha').value,
+                hora: document.getElementById('editHora').value,
+                noches: document.getElementById('editNoches').value,
+                personas: parseInt(document.getElementById('editPersonas').value)
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/reservas/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('Reserva actualizada exitosamente');
+                    bootstrap.Modal.getInstance(document.getElementById('editarReservaModal')).hide();
+                    cargarReservas();
+                } else {
+                    throw new Error('Error al actualizar');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al guardar los cambios');
+            }
+        }
+
+        async function eliminarReserva(id) {
+            if (!confirm('¿Está seguro de eliminar esta reserva?')) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/reservas/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    alert('Reserva eliminada exitosamente');
+                    cargarReservas();
+                } else {
+                    throw new Error('Error al eliminar');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al eliminar la reserva');
+            }
+        }
+
+        async function cargarContactos() {
+            try {
+                const response = await fetch(`${API_URL}/contactos`);
+                const contactos = await response.json();
+                
+                document.getElementById('countContactos').textContent = contactos.length;
+                
+                const tbody = document.getElementById('tablaContactos');
+                if (contactos.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center">No hay contactos registrados</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = contactos.map(c => `
+                    <tr>
+                        <td>${c.id}</td>
+                        <td>${c.nombre}</td>
+                        <td>${c.email}</td>
+                        <td>${c.telefono}</td>
+                        <td>${c.mensaje.substring(0, 50)}...</td>
+                        <td>${c.created_at ? new Date(c.created_at).toLocaleDateString() : '-'}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning" onclick="editarContacto(${c.id})">
+                                Editar
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="eliminarContacto(${c.id})">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar los contactos');
+            }
+        }
+
+        async function editarContacto(id) {
+            try {
+                const response = await fetch(`${API_URL}/contactos/${id}`);
+                const contacto = await response.json();
+                
+                document.getElementById('editContactoId').value = contacto.id;
+                document.getElementById('editContactoNombre').value = contacto.nombre;
+                document.getElementById('editContactoEmail').value = contacto.email;
+                document.getElementById('editContactoTelefono').value = contacto.telefono;
+                document.getElementById('editContactoMensaje').value = contacto.mensaje;
+                
+                new bootstrap.Modal(document.getElementById('editarContactoModal')).show();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar el contacto');
+            }
+        }
+
+        async function guardarContacto() {
+            const id = document.getElementById('editContactoId').value;
+            const data = {
+                nombre: document.getElementById('editContactoNombre').value,
+                email: document.getElementById('editContactoEmail').value,
+                telefono: document.getElementById('editContactoTelefono').value,
+                mensaje: document.getElementById('editContactoMensaje').value
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/contactos/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('Contacto actualizado exitosamente');
+                    bootstrap.Modal.getInstance(document.getElementById('editarContactoModal')).hide();
+                    cargarContactos();
+                } else {
+                    throw new Error('Error al actualizar');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al guardar los cambios');
+            }
+        }
+
+        async function eliminarContacto(id) {
+            if (!confirm('¿Está seguro de eliminar este contacto?')) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/contactos/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    alert('Contacto eliminado exitosamente');
+                    cargarContactos();
+                } else {
+                    throw new Error('Error al eliminar');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al eliminar el contacto');
+            }
+        }
+
+        async function cargarResenas() {
+            try {
+                const response = await fetch(`${API_URL}/resenas/all`);
+                const resenas = await response.json();
+                
+                document.getElementById('countResenas').textContent = resenas.length;
+                
+                const tbody = document.getElementById('tablaResenas');
+                if (resenas.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7" class="text-center">No hay reseñas registradas</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = resenas.map(r => `
+                    <tr>
+                        <td>${r.id}</td>
+                        <td>${r.lugarId}</td>
+                        <td>${r.nombre}</td>
+                        <td>${'⭐'.repeat(r.calificacion)}</td>
+                        <td>${r.comentario.substring(0, 50)}...</td>
+                        <td>${r.fecha}</td>
+                        <td>
+                            <button class="btn btn-sm btn-warning" onclick="editarResena(${r.id})">
+                                Editar
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="eliminarResena(${r.id})">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar las reseñas');
+            }
+        }
+
+        async function editarResena(id) {
+            try {
+                const response = await fetch(`${API_URL}/resenas/${id}`);
+                const resena = await response.json();
+                
+                document.getElementById('editResenaId').value = resena.id;
+                document.getElementById('editResenaNombre').value = resena.nombre;
+                document.getElementById('editResenaCalificacion').value = resena.calificacion;
+                document.getElementById('editResenaComentario').value = resena.comentario;
+                
+                new bootstrap.Modal(document.getElementById('editarResenaModal')).show();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar la reseña');
+            }
+        }
+
+        async function guardarResena() {
+            const id = document.getElementById('editResenaId').value;
+            const data = {
+                nombre: document.getElementById('editResenaNombre').value,
+                calificacion: parseInt(document.getElementById('editResenaCalificacion').value),
+                comentario: document.getElementById('editResenaComentario').value
+            };
+            
+            try {
+                const response = await fetch(`${API_URL}/resenas/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    alert('Reseña actualizada exitosamente');
+                    bootstrap.Modal.getInstance(document.getElementById('editarResenaModal')).hide();
+                    cargarResenas();
+                } else {
+                    throw new Error('Error al actualizar');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al guardar los cambios');
+            }
+        }
+
+        async function eliminarResena(id) {
+            if (!confirm('¿Está seguro de eliminar esta reseña?')) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/resenas/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (response.ok) {
+                    alert('Reseña eliminada exitosamente');
+                    cargarResenas();
+                } else {
+                    throw new Error('Error al eliminar');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al eliminar la reseña');
+            }
+        }
+    </script>
+</body>
+</html>

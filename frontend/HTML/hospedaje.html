@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospedaje</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Hospedaje - ViveTarqui</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
     body {
       background-color: #F5F5F5;
@@ -14,7 +13,6 @@
       background-color: #A9737E !important;
       font-size: 1.5rem
     }
-   
     h1, h2, h3, h4, h5 {
       color: #660D1F !important; 
     }
@@ -22,7 +20,6 @@
       background-color: #A9737E; 
       color: #ffffff;      
     }
-
     .btn-customer {
       background-color: #660D1F !important; 
       border-color: none !important;
@@ -34,20 +31,21 @@
       background-color: #660D1F !important;
       border-color: none !important;
       color: #ffffff !important;
-      opacity: 1 !important;
+      opacity: 0.9 !important;
     }
     .text-custom {
       color: #660D1F; 
     }
-    a.text-decoration-none:hover {
-      opacity: 1;
+    .card-reserva {
+        border-left: 4px solid #660D1F;
+        transition: transform 0.2s;
     }
-    a.text-decoration-none:hover .bg-white {
-      transform: none;
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    .card-reserva:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    a.text-decoration-none:hover .text-custom {
-      color: #660D1F !important;
+    .badge-custom {
+        background-color: #660D1F;
     }
     </style>
 </head>
@@ -56,13 +54,13 @@
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
                 <img src="../assets/img/Logo.png" alt="ViveTarqui" width="120" height="120">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active text-white" aria-current="page" href="..//index.html">Inicio</a>
+                            <a class="nav-link text-white" href="../index.html">Inicio</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="quehacer.html">Qué hacer</a>
@@ -74,57 +72,90 @@
                 </div>
             </div>
         </nav>
-        <section class="container my-4">
-            <h3 class="text">HOTELES</h3>
-        </section>
     </header>
 
-    <div class="m-4 p-2 my-3">
-        <div class="row text-center g-4 justify-content-center">
+    <main>
+        <section class="container my-4">
+            <h3>HOTELES</h3>
+        </section>
 
-            <div class="col-6 col-md-4">
-                <a href="casavictoria.html" class="text-decoration-none text-dark">
-                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow overflow-hidden" style="width:250px; height:250px;">
-                        <img src="../assets/img/HOTEL1.jpg" alt="Hotel Casa Victoria" class="img-fluid" style="max-width:100%; max-height:100%; object-fit:contain;">
-                    </div>
-                    <p class="mt-3 fs-3 fw-bold text-custom">Hotel Casa Victoria</p>
-                </a>
-            </div>
+        <div class="container my-4">
+            <div class="row text-center g-4 justify-content-center">
+                <div class="col-6 col-md-4">
+                    <a href="casavictoria.html" class="text-decoration-none text-dark">
+                        <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow overflow-hidden" style="width:250px; height:250px;">
+                            <img src="../assets/img/HOTEL1.jpg" alt="Hotel Casa Victoria" class="img-fluid" style="max-width:100%; max-height:100%; object-fit:contain;">
+                        </div>
+                        <p class="mt-3 fs-3 fw-bold text-custom">Hotel Casa Victoria</p>
+                    </a>
+                </div>
 
-            <div class="col-6 col-md-4">
-                <a href="castalia.html" class="text-decoration-none text-dark">
-                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow overflow-hidden" style="width:250px; height:250px;">
-                        <img src="../assets/img/HOTEL2.png" alt="Hotel Castalia Plus" style="width:100%; height:100%; object-fit:cover; display:block;">
-                    </div>
-                    <p class="mt-3 fs-3 fw-bold text-custom">Hotel Castalia Plus</p>
-                </a>
-            </div>
+                <div class="col-6 col-md-4">
+                    <a href="castalia.html" class="text-decoration-none text-dark">
+                        <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow overflow-hidden" style="width:250px; height:250px;">
+                            <img src="../assets/img/HOTEL2.png" alt="Hotel Castalia Plus" style="width:100%; height:100%; object-fit:cover;">
+                        </div>
+                        <p class="mt-3 fs-3 fw-bold text-custom">Hotel Castalia Plus</p>
+                    </a>
+                </div>
 
-            <div class="col-6 col-md-4">
-                <a href="hospedajereal.html" class="text-decoration-none text-dark">
-                    <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow overflow-hidden" style="width:250px; height:250px;">
-                        <img src="../assets/img/HOTEL3.jpg" alt="Hospedaje Real" class="img-fluid" style="max-width:100%; max-height:100%; object-fit:contain;">
-                    </div>
-                    <p class="mt-3 fs-3 fw-bold text-custom">Hospedaje Real</p>
-                </a>
+                <div class="col-6 col-md-4">
+                    <a href="hospedajereal.html" class="text-decoration-none text-dark">
+                        <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto shadow overflow-hidden" style="width:250px; height:250px;">
+                            <img src="../assets/img/HOTEL3.jpg" alt="Hospedaje Real" class="img-fluid" style="max-width:100%; max-height:100%; object-fit:contain;">
+                        </div>
+                        <p class="mt-3 fs-3 fw-bold text-custom">Hospedaje Real</p>
+                    </a>
+                </div>
             </div>
-        </div>
 
             <div class="text-center mt-4 mb-2">
                 <button type="button" class="btn btn-customer btn-lg fw-bold" data-bs-toggle="modal" data-bs-target="#reservaModal">
-                    Reservar
+                    ➕ Hacer Nueva Reserva
                 </button>
             </div>
         </div>
 
-        <div class="modal fade" id="reservaModal" tabindex="-1" aria-labelledby="reservaModalLabel" aria-hidden="true">
+        <section class="container my-5 py-4" style="background-color: #fff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+            <div class="text-center mb-4">
+                <h3>📋 GESTIONAR MIS RESERVAS</h3>
+                <p class="text-muted">Ver, editar o eliminar tus reservas de hotel</p>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <label for="buscarReserva" class="form-label fw-bold">
+                                    🔍 Buscar mis reservas por teléfono:
+                                </label>
+                                <div class="input-group input-group-lg">
+                                    <input type="text" class="form-control" id="buscarReserva" 
+                                           placeholder="Ejemplo: 3001234567">
+                                    <button class="btn btn-customer" type="button" onclick="buscarMisReservas()">
+                                        Buscar
+                                    </button>
+                                </div>
+                                <small class="text-muted">
+                                    Ingresa el teléfono que usaste al hacer la reserva
+                                </small>
+                            </div>
+                            
+                            <div id="resultadoReservas"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="modal fade" id="reservaModal" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header text-white">
-                        <h5 class="modal-title" id="reservaModalLabel">Hacer una Reserva</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    <div class="modal-header" style="background-color: #A9737E;">
+                        <h5 class="modal-title text-white">Hacer Reserva</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                     </div>
-
                     <div class="modal-body">
                         <form id="formReserva">
                             <div class="mb-3">
@@ -136,34 +167,28 @@
                                     <option value="Hospedaje Real">Hospedaje Real</option>
                                 </select>
                             </div>
-
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
                                 <input type="text" class="form-control" id="nombre" required>
                             </div>
-
                             <div class="mb-3">
                                 <label for="telefono" class="form-label">Teléfono</label>
-                                <input type="number" class="form-control" id="telefono" required>
+                                <input type="text" class="form-control" id="telefono" required>
                             </div>
-
                             <div class="mb-3">
-                                <label for="fecha" class="form-label">Fecha</label>
-                                <input type="date" class="form-control" id="fecha" name="fecha" required>
+                                <label for="fecha" class="form-label">Fecha de llegada</label>
+                                <input type="date" class="form-control" id="fecha" required>
                             </div>
-
                             <div class="mb-3">
                                 <label for="noches" class="form-label">Número de noches</label>
-                                <input type="number" class="form-control" id="noches" name="noches" required min="1">
+                                <input type="number" class="form-control" id="noches" required min="1">
                             </div>
-
                             <div class="mb-3">
                                 <label for="personas" class="form-label">Número de personas</label>
-                                <input type="number" class="form-control" id="personas" name="personas" required min="1">
+                                <input type="number" class="form-control" id="personas" required min="1">
                             </div>
-
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-customer" data-bs-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                                 <button type="submit" class="btn btn-customer">Confirmar Reserva</button>
                             </div>
                         </form>
@@ -171,17 +196,72 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="editarMiReservaModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #A9737E;">
+                        <h5 class="modal-title text-white">✏️ Editar Mi Reserva</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="formEditarMiReserva">
+                            <input type="hidden" id="editMiReservaId">
+                            
+                            <div class="alert alert-info">
+                                <strong>ℹ️ Nota:</strong> Puedes modificar todos los campos excepto el hotel
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Hotel</label>
+                                <input type="text" class="form-control" id="editMiLugar" readonly style="background-color: #e9ecef;">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="editMiNombre" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="editMiTelefono" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Fecha de llegada</label>
+                                <input type="date" class="form-control" id="editMiFecha" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Número de noches</label>
+                                <input type="number" class="form-control" id="editMiNoches" min="1" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Número de personas</label>
+                                <input type="number" class="form-control" id="editMiPersonas" min="1" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-customer" onclick="guardarMiReserva()">💾 Guardar Cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer class="custom-footer text-center py-3 mt-3">
+    <footer class="custom-footer text-center py-3 mt-5">
         <div class="container">
             <p class="mb-0">Copyright © 2025, Todos los derechos reservados</p>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
-    const API_URL = 'http://localhost:3000/api/reservas/hotel';
+    const API_URL = 'http://localhost:3000/api';
 
     document.addEventListener("DOMContentLoaded", () => {
       const form = document.getElementById('formReserva');
@@ -206,39 +286,195 @@
             personas: parseInt(personas)
           };
 
-          console.log('Enviando reserva:', reserva);
-
           try {
-            const response = await fetch(API_URL, {
+            const response = await fetch(`${API_URL}/reservas/hotel`, {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
+              headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(reserva)
             });
 
             if (response.ok) {
-              const resultado = await response.json();
-              console.log('Reserva confirmada:', resultado);
-              
               form.reset();
-              
               const modal = bootstrap.Modal.getInstance(document.getElementById('reservaModal'));
               if (modal) modal.hide();
               
-              alert(`¡Reserva confirmada exitosamente!\n\nHotel: ${hotel}\nFecha de entrada: ${fecha}\nNoches: ${noches}\nPersonas: ${personas}\n\n¡Te esperamos!`);
+              alert(`✅ ¡Reserva confirmada exitosamente!\n\nHotel: ${hotel}\nFecha: ${fecha}\nNoches: ${noches}\nPersonas: ${personas}\n\n💡 Usa tu teléfono (${telefono}) para buscar y gestionar tu reserva.`);
             } else {
-              const error = await response.json();
-              console.error('Error:', error);
-              throw new Error(error.error || 'Error al confirmar la reserva');
+              throw new Error('Error al confirmar la reserva');
             }
           } catch (error) {
-            console.error('Error completo:', error);
-            alert('Hubo un error al confirmar tu reserva. Por favor, intenta de nuevo.');
+            console.error('Error:', error);
+            alert('❌ Hubo un error al confirmar tu reserva. Por favor, intenta de nuevo.');
           }
         });
       }
     });
+
+    async function buscarMisReservas() {
+        const telefono = document.getElementById('buscarReserva').value.trim();
+        const resultadoDiv = document.getElementById('resultadoReservas');
+        
+        if (!telefono) {
+            resultadoDiv.innerHTML = '<div class="alert alert-warning">⚠️ Por favor ingresa tu teléfono</div>';
+            return;
+        }
+        
+        try {
+            resultadoDiv.innerHTML = `
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2">🔍 Buscando tus reservas...</p>
+                </div>
+            `;
+            
+            const response = await fetch(`${API_URL}/reservas?tipo=hotel`);
+            const todasReservas = await response.json();
+            
+            const misReservas = todasReservas.filter(r => r.telefono === telefono);
+            
+            if (misReservas.length === 0) {
+                resultadoDiv.innerHTML = `
+                    <div class="alert alert-info">
+                        <h5>ℹ️ No se encontraron reservas</h5>
+                        <p class="mb-0">No hay reservas registradas con el teléfono: <strong>${telefono}</strong></p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = `
+                <div class="alert alert-success">
+                    ✅ Se encontraron <strong>${misReservas.length}</strong> reserva(s)
+                </div>
+            `;
+            
+            misReservas.forEach(reserva => {
+                html += `
+                    <div class="card card-reserva mb-3">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-8">
+                                    <h5 class="card-title text-custom mb-3">
+                                        🏨 ${reserva.lugar}
+                                    </h5>
+                                    <div class="row">
+                                        <div class="col-sm-6 mb-2">
+                                            <small class="text-muted">Nombre:</small>
+                                            <p class="mb-0 fw-bold">${reserva.nombre}</p>
+                                        </div>
+                                        <div class="col-sm-6 mb-2">
+                                            <small class="text-muted">Teléfono:</small>
+                                            <p class="mb-0 fw-bold">${reserva.telefono}</p>
+                                        </div>
+                                        <div class="col-sm-4 mb-2">
+                                            <small class="text-muted">📅 Fecha:</small>
+                                            <p class="mb-0 fw-bold">${reserva.fecha}</p>
+                                        </div>
+                                        <div class="col-sm-4 mb-2">
+                                            <small class="text-muted">🌙 Noches:</small>
+                                            <p class="mb-0 fw-bold">${reserva.noches}</p>
+                                        </div>
+                                        <div class="col-sm-4 mb-2">
+                                            <small class="text-muted">👥 Personas:</small>
+                                            <p class="mb-0 fw-bold">${reserva.personas}</p>
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">
+                                        <em>Reserva #${reserva.id} - Creada: ${new Date(reserva.created_at).toLocaleDateString()}</em>
+                                    </small>
+                                </div>
+                                <div class="col-md-4 text-end">
+                                    <button class="btn btn-warning btn-sm w-100 mb-2" onclick="editarMiReserva(${reserva.id})">
+                                        ✏️ Editar Reserva
+                                    </button>
+                                    <button class="btn btn-danger btn-sm w-100" onclick="eliminarMiReserva(${reserva.id}, '${reserva.lugar}')">
+                                        🗑️ Eliminar Reserva
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            resultadoDiv.innerHTML = html;
+            
+        } catch (error) {
+            console.error('Error:', error);
+            resultadoDiv.innerHTML = '<div class="alert alert-danger">❌ Error al buscar reservas. Verifica tu conexión.</div>';
+        }
+    }
+
+    async function editarMiReserva(id) {
+        try {
+            const response = await fetch(`${API_URL}/reservas/${id}`);
+            const reserva = await response.json();
+            
+            document.getElementById('editMiReservaId').value = reserva.id;
+            document.getElementById('editMiLugar').value = reserva.lugar;
+            document.getElementById('editMiNombre').value = reserva.nombre;
+            document.getElementById('editMiTelefono').value = reserva.telefono;
+            document.getElementById('editMiFecha').value = reserva.fecha;
+            document.getElementById('editMiNoches').value = reserva.noches;
+            document.getElementById('editMiPersonas').value = reserva.personas;
+            
+            new bootstrap.Modal(document.getElementById('editarMiReservaModal')).show();
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al cargar la reserva');
+        }
+    }
+
+    async function guardarMiReserva() {
+        const id = document.getElementById('editMiReservaId').value;
+        const data = {
+            lugar: document.getElementById('editMiLugar').value,
+            nombre: document.getElementById('editMiNombre').value,
+            telefono: document.getElementById('editMiTelefono').value,
+            fecha: document.getElementById('editMiFecha').value,
+            noches: parseInt(document.getElementById('editMiNoches').value),
+            personas: parseInt(document.getElementById('editMiPersonas').value)
+        };
+        
+        try {
+            const response = await fetch(`${API_URL}/reservas/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            if (response.ok) {
+                alert('✅ ¡Reserva actualizada exitosamente!');
+                bootstrap.Modal.getInstance(document.getElementById('editarMiReservaModal')).hide();
+                buscarMisReservas();
+            } else {
+                throw new Error('Error al actualizar');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al guardar los cambios');
+        }
+    }
+
+    async function eliminarMiReserva(id, lugar) {
+        if (!confirm(`⚠️ ¿Estás seguro de eliminar tu reserva en ${lugar}?\n\nEsta acción no se puede deshacer.`)) return;
+        
+        try {
+            const response = await fetch(`${API_URL}/reservas/${id}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                alert('✅ Reserva eliminada exitosamente');
+                buscarMisReservas();
+            } else {
+                throw new Error('Error al eliminar');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('❌ Error al eliminar la reserva');
+        }
+    }
     </script>
 </body>
 </html>

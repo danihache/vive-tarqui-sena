@@ -19,19 +19,74 @@ app.post("/api/contactos", (req, res) => {
     "INSERT INTO contactos (nombre, email, telefono, mensaje) VALUES (?, ?, ?, ?)",
     [nombre, email, telefono, mensaje], (err, resultado) => {
       if (err) return res.status(500).json({ error: "Error guardando el contacto" });
-
       res.json({id: resultado.insertId, nombre, email, telefono, mensaje});
     }
   );
 });
 
 app.get("/api/contactos", (req, res) => {
-    db.contactos.query("SELECT * FROM contactos", (err, resultado) => {
-        if (err) return res.status(500).json({error: "Error en la base de datos"});
-         res.json(resultado);
-    })
-})
+  conexionContactos.query("SELECT * FROM contactos ORDER BY created_at DESC", (err, resultado) => {
+    if (err) return res.status(500).json({error: "Error en la base de datos"});
+    res.json(resultado);
+  });
+});
 
+app.get("/api/contactos/:id", (req, res) => {
+  const { id } = req.params;
+  
+  conexionContactos.query(
+    "SELECT * FROM contactos WHERE id = ?",
+    [id],
+    (err, resultado) => {
+      if (err) return res.status(500).json({error: "Error en la base de datos"});
+      if (resultado.length === 0) return res.status(404).json({error: "Contacto no encontrado"});
+      res.json(resultado[0]);
+    }
+  );
+});
+
+app.put("/api/contactos/:id", (req, res) => {
+  const { id } = req.params;
+  const { nombre, email, telefono, mensaje } = req.body;
+  
+  if (!nombre || !email || !telefono || !mensaje) {
+    return res.status(400).json({ error: "Todos los campos son requeridos" });
+  }
+  
+  conexionContactos.query(
+    "UPDATE contactos SET nombre = ?, email = ?, telefono = ?, mensaje = ? WHERE id = ?",
+    [nombre, email, telefono, mensaje, id],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error SQL:", err);
+        return res.status(500).json({error: "Error al actualizar el contacto"});
+      }
+      if (resultado.affectedRows === 0) {
+        return res.status(404).json({error: "Contacto no encontrado"});
+      }
+      res.json({id: parseInt(id), nombre, email, telefono, mensaje});
+    }
+  );
+});
+
+app.delete("/api/contactos/:id", (req, res) => {
+  const { id } = req.params;
+  
+  conexionContactos.query(
+    "DELETE FROM contactos WHERE id = ?",
+    [id],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error SQL:", err);
+        return res.status(500).json({error: "Error al eliminar el contacto"});
+      }
+      if (resultado.affectedRows === 0) {
+        return res.status(404).json({error: "Contacto no encontrado"});
+      }
+      res.json({mensaje: "Contacto eliminado exitosamente", id: parseInt(id)});
+    }
+  );
+});
 
 app.post("/api/reservas/restaurante-bar", (req, res) => {
   const { tipo, lugar, nombre, telefono, fecha, hora, personas } = req.body;
@@ -63,7 +118,6 @@ app.post("/api/reservas/restaurante-bar", (req, res) => {
   );
 });
 
-
 app.post("/api/reservas/hotel", (req, res) => {
   const { lugar, nombre, telefono, fecha, noches, personas } = req.body;
   
@@ -71,7 +125,7 @@ app.post("/api/reservas/hotel", (req, res) => {
     return res.status(400).json({ error: "Todos los campos son obligatorios" });
   }
   
-   conexionReservas.query(
+  conexionReservas.query(
     "INSERT INTO reservas (tipo, lugar, nombre, telefono, fecha, hora, noches, personas) VALUES ('hotel', ?, ?, ?, ?, NULL, ?, ?)",
     [lugar, nombre, telefono, fecha, noches, personas], 
     (err, result) => {
@@ -117,7 +171,7 @@ app.get("/api/reservas", (req, res) => {
   
   query += " ORDER BY created_at DESC";
   
-  db.reservas.query(query, params, (err, resultado) => {
+  conexionReservas.query(query, params, (err, resultado) => {
     if (err) {
       console.error("Error:", err);
       return res.status(500).json({error: "Error en la base de datos"});
@@ -129,7 +183,7 @@ app.get("/api/reservas", (req, res) => {
 app.get("/api/reservas/tipo/:tipo", (req, res) => {
   const { tipo } = req.params;
   
-  db.reservas.query(
+  conexionReservas.query(
     "SELECT * FROM reservas WHERE tipo = ? ORDER BY created_at DESC",
     [tipo],
     (err, resultado) => {
@@ -139,6 +193,58 @@ app.get("/api/reservas/tipo/:tipo", (req, res) => {
   );
 });
 
+app.get("/api/reservas/:id", (req, res) => {
+  const { id } = req.params;
+  
+  conexionReservas.query(
+    "SELECT * FROM reservas WHERE id = ?",
+    [id],
+    (err, resultado) => {
+      if (err) return res.status(500).json({error: "Error en la base de datos"});
+      if (resultado.length === 0) return res.status(404).json({error: "Reserva no encontrada"});
+      res.json(resultado[0]);
+    }
+  );
+});
+
+app.put("/api/reservas/:id", (req, res) => {
+  const { id } = req.params;
+  const { lugar, nombre, telefono, fecha, hora, noches, personas } = req.body;
+  
+  conexionReservas.query(
+    "UPDATE reservas SET lugar = ?, nombre = ?, telefono = ?, fecha = ?, hora = ?, noches = ?, personas = ? WHERE id = ?",
+    [lugar, nombre, telefono, fecha, hora || null, noches || null, personas, id],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error SQL:", err);
+        return res.status(500).json({error: "Error al actualizar la reserva"});
+      }
+      if (resultado.affectedRows === 0) {
+        return res.status(404).json({error: "Reserva no encontrada"});
+      }
+      res.json({id: parseInt(id), lugar, nombre, telefono, fecha, hora, noches, personas});
+    }
+  );
+});
+
+app.delete("/api/reservas/:id", (req, res) => {
+  const { id } = req.params;
+  
+  conexionReservas.query(
+    "DELETE FROM reservas WHERE id = ?",
+    [id],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error SQL:", err);
+        return res.status(500).json({error: "Error al eliminar la reserva"});
+      }
+      if (resultado.affectedRows === 0) {
+        return res.status(404).json({error: "Reserva no encontrada"});
+      }
+      res.json({mensaje: "Reserva eliminada exitosamente", id: parseInt(id)});
+    }
+  );
+});
 
 app.get("/api/resenas", (req, res) => {
   const { lugarId } = req.query;
@@ -155,7 +261,6 @@ app.get("/api/resenas", (req, res) => {
         console.error("Error al obtener reseñas:", err);
         return res.status(500).json({ error: "Error al obtener las reseñas" });
       }
-      
       res.json(resultado);
     }
   );
@@ -175,8 +280,8 @@ app.post("/api/resenas", (req, res) => {
     [lugarId, nombre, comentario, calificacion, fecha],
     (err, resultado) => {
       if (err) {
-        console.error("Error al guardar reseÃ±a:", err);
-        return res.status(500).json({ error: "Error al guardar la reseÃ±a" });
+        console.error("Error al guardar reseña:", err);
+        return res.status(500).json({ error: "Error al guardar la reseña" });
       }
       
       res.json({
@@ -197,29 +302,78 @@ app.get("/api/resenas/all", (req, res) => {
     (err, resultado) => {
       if (err) {
         console.error("Error al obtener todas las reseñas:", err);
-        return res.status(500).json({ error: "Error al obtener las reseÃ±as" });
+        return res.status(500).json({ error: "Error al obtener las reseñas" });
       }
-      
       res.json(resultado);
     }
   );
 });
 
-app.get('/', (req, res) => {
-    res.json({ mensaje: 'API Vive Tarquí funcionando correctamente' });
+app.get("/api/resenas/:id", (req, res) => {
+  const { id } = req.params;
+  
+  conexionResenas.query(
+    "SELECT * FROM resenas WHERE id = ?",
+    [id],
+    (err, resultado) => {
+      if (err) return res.status(500).json({error: "Error en la base de datos"});
+      if (resultado.length === 0) return res.status(404).json({error: "Reseña no encontrada"});
+      res.json(resultado[0]);
+    }
+  );
 });
 
-app.get('/api/contactos', (req, res) => {
-    conexionContactos.query('SELECT * FROM contactos', (err, results) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        res.json(results);
-    });
+app.put("/api/resenas/:id", (req, res) => {
+  const { id } = req.params;
+  const { nombre, comentario, calificacion } = req.body;
+  
+  if (!nombre || !comentario || !calificacion) {
+    return res.status(400).json({ error: "Todos los campos son requeridos" });
+  }
+  
+  conexionResenas.query(
+    "UPDATE resenas SET nombre = ?, comentario = ?, calificacion = ? WHERE id = ?",
+    [nombre, comentario, calificacion, id],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error SQL:", err);
+        return res.status(500).json({error: "Error al actualizar la reseña"});
+      }
+      if (resultado.affectedRows === 0) {
+        return res.status(404).json({error: "Reseña no encontrada"});
+      }
+      res.json({id: parseInt(id), nombre, comentario, calificacion});
+    }
+  );
 });
+
+app.delete("/api/resenas/:id", (req, res) => {
+  const { id } = req.params;
+  
+  conexionResenas.query(
+    "DELETE FROM resenas WHERE id = ?",
+    [id],
+    (err, resultado) => {
+      if (err) {
+        console.error("Error SQL:", err);
+        return res.status(500).json({error: "Error al eliminar la reseña"});
+      }
+      if (resultado.affectedRows === 0) {
+        return res.status(404).json({error: "Reseña no encontrada"});
+      }
+      res.json({mensaje: "Reseña eliminada exitosamente", id: parseInt(id)});
+    }
+  );
+});
+
+
+app.get('/', (req, res) => {
+  res.json({ mensaje: 'API Vive Tarquí funcionando correctamente' });
+});
+
+app.use(express.static('.'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-
